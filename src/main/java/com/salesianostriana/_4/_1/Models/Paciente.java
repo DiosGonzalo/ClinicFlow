@@ -8,6 +8,7 @@ import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -26,7 +27,8 @@ public class Paciente {
     private LocalDateTime fechaNacimiento;
 
 
-    @OneToMany
+    @OneToMany(mappedBy = "paciente")
+    private List<Cita> citas;
 
     @Override
     public final boolean equals(Object o) {

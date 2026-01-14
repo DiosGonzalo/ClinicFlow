@@ -3,9 +3,11 @@ package com.salesianostriana._4._1.Models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -21,6 +23,9 @@ public class Profesional {
     private String nombre;
 
     private String especialidad;
+
+    @OneToMany(mappedBy = "profesional")
+    private List<Cita> citas;
 
 
     @Override

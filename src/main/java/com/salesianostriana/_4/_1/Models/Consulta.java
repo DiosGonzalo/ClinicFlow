@@ -14,6 +14,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @ToString
 public class Consulta {
 
