@@ -30,6 +30,15 @@ public class Paciente {
     @OneToMany(mappedBy = "paciente")
     private List<Cita> citas;
 
+    public void addCita(Cita cita) {
+        citas.add(cita);
+        cita.setPaciente(this);
+    }
+
+    public void removeCita(Cita cita) {
+        citas.remove(cita);
+        cita.setPaciente(null);
+    }
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
