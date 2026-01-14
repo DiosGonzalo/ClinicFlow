@@ -28,6 +28,16 @@ public class Profesional {
     private List<Cita> citas;
 
 
+    public void addCita(Cita cita) {
+        citas.add(cita);
+        cita.setProfesional(this);
+    }
+
+    public void removeCita(Cita cita) {
+        citas.remove(cita);
+        cita.setProfesional(null);
+    }
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
