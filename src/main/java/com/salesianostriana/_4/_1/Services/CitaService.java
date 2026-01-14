@@ -1,5 +1,6 @@
 package com.salesianostriana._4._1.Services;
 
+import com.salesianostriana._4._1.Dtos.CreateConsultaRequest;
 import com.salesianostriana._4._1.Enums.Estado;
 import com.salesianostriana._4._1.Models.Cita;
 import com.salesianostriana._4._1.Models.Consulta;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @NoArgsConstructor
@@ -58,6 +60,11 @@ public class CitaService {
         return cita;
     }
 
+    public List<Cita> getALl(){
+        List<Cita> todasCitas = citaRepository.findAll();
+        return todasCitas;
+    }
+
     public void CancelarCita(Long idCita){
         Cita cita = citaRepository.findById(idCita).orElseThrow(EntityNotFoundException::new);
         if (cita.getEstado().equals(Estado.ATENDIDA)) {
@@ -67,23 +74,23 @@ public class CitaService {
         cita.setEstado(Estado.CANCELADA);
     }
 
-    public Consulta registrarConsulta(Long icCita, Long idProfesional, Long idPaciente, String observaciones, String diagnostico){
-        Cita cita = citaRepository.findById(idCita).orElseThrow(EntityNotFoundException::new);
-        Profesional profesional = professionalRepository.findById(idProfesional).orElseThrow(EntityNotFoundException::new);
-        Paciente paciente = pacienteRepository.findById(idPaciente).orElseThrow(EntityNotFoundException :: new);
+    public Consulta registrarConsulta(Long idCita, CreateConsultaRequest request) {
+        Cita cita = citaRepository.findById(idCita)
+                .orElseThrow(() -> new EntityNotFoundException("Cita no encontrada"));
 
-
-        if(cita.getEstado().equals(Estado.CANCELADA) || cita.getEstado().equals(Estado.ATENDIDA)){
-            throw new AlredyAttendedException;
+        if (cita.getEstado().equals(Estado.CANCELADA) || cita.getEstado().equals(Estado.ATENDIDA)) {
+            throw new AlreadyAttendedException();
         }
 
         cita.setEstado(Estado.ATENDIDA);
+
         Consulta consulta = Consulta.builder()
                 .fecha(cita.getFechaHora())
-                .diagnostico(diagnostico)
-                .observaciones(observaciones)
+                .diagnostico(request.diagnostico())
+                .observaciones(request.observaciones())
                 .build();
-        return consulta;
+
+        return consultaRepository.save(consulta);
     }
 
 
