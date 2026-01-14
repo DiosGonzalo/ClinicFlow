@@ -2,9 +2,7 @@ package com.salesianostriana._4._1.Models;
 
 
 import com.salesianostriana._4._1.Enums.Estado;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 import org.springframework.cglib.core.Local;
@@ -25,6 +23,16 @@ public class Cita {
     private LocalDateTime fechaHora;
 
     private Estado estado;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Paciente paciente;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Profesional profesional;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Consulta consulta;
 
 
     @Override
