@@ -2,6 +2,7 @@ package com.salesianostriana._4._1.Repositorios;
 
 import com.salesianostriana._4._1.Dtos.CitaListDto;
 import com.salesianostriana._4._1.Models.Cita;
+import com.salesianostriana._4._1.Models.Paciente;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CitaRepository extends JpaRepository<Cita, Long> {
@@ -28,6 +30,7 @@ public interface CitaRepository extends JpaRepository<Cita, Long> {
     List<Cita> findByPacienteId(Long id);
 
 
-    Page<Cita> findByFechaBetween(LocalDateTime inicio, LocalDateTime fin, Pageable pageable); [8, 10]
+    Page<Cita> findByFechaBetween(LocalDateTime inicio, LocalDateTime fin, Pageable pageable);
+
 
 }
